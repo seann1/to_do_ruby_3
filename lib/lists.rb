@@ -28,4 +28,16 @@ class List
     @id = results.first['id'].to_i
   end
 
+  def self.delete(user_list)
+    DB.exec("DELETE FROM lists WHERE name = '#{user_list}'")
+  end
+
+  def self.find_list_by_name(user_choice)
+    list_id = DB.exec("SELECT * FROM lists WHERE name = '#{user_choice}';")
+    name = list_id[0]['name']
+    id = list_id[0]['id']
+    found_list = List.new('name' => name, 'id' => id)
+
+  end
+
 end

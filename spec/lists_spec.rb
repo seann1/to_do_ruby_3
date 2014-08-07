@@ -48,4 +48,14 @@ describe List do
     list = List.new({'name' => 'Epicodus', 'id' => 1})
     list.should be_an_instance_of List
   end
+
+  describe "find_list_by_name" do
+    it 'searches through all lists and returns the one that matches the given name' do
+      list_1 = List.new({'name' => 'Epicodus', 'id' => 1})
+      list_2 = List.new({'name' => 'Home', 'id' => 2})
+      list_1.save
+      list_2.save
+      List.find_list_by_name('Epicodus').should eq list_1
+    end
+  end
 end

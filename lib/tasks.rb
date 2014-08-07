@@ -27,4 +27,17 @@ class Task
   def ==(another_task)
     self.name == another_task.name && self.list_id == another_task.list_id
   end
+
+  def self.list_tasks_for_list(input)
+    results = DB.exec("SELECT * FROM tasks WHERE list_id = #{input};")
+    tasks = []
+    results.each do |result|
+      name = result['name']
+      list_id = result['list_id'].to_i
+      tasks << Task.new({'name' => name, 'list_id' => list_id})
+    end
+    tasks.each do |item|
+      puts "\n* #{item.name}"
+    end
+  end
 end
