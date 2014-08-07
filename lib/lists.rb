@@ -37,7 +37,6 @@ class List
     name = list_id[0]['name']
     id = list_id[0]['id']
     found_list = List.new('name' => name, 'id' => id)
-
   end
 
 end

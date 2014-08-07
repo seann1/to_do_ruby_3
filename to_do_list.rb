@@ -1,6 +1,7 @@
 require 'pg'
 require './lib/tasks'
 require './lib/lists'
+require 'pry'
 
 DB = PG.connect({:dbname => 'to_do'})
 
@@ -11,6 +12,7 @@ def welcome
     puts "Press '2' to show all lists"
     puts "Press '3' to add task(s)"
     puts "Press '4' to delete list"
+    puts "Press '5' to view tasks by list"
     puts "Press 'x' to exit"
     main_choice = gets.chomp
 
@@ -22,9 +24,14 @@ def welcome
       add_task
     elsif main_choice == '4'
       delete_list
+    elsif main_choice == '5'
+      list_tasks
     elsif main_choice =='x'
       puts "Goodbye."
       exit
+    else
+      puts "Invalid entry."
+      puts "\n"
     end
   end
 end
@@ -40,7 +47,6 @@ def show_lists
   List.all.each do |item|
     puts "#{item.id}. #{item.name}"
   end
-  list_tasks
 end
 
 def delete_list
@@ -66,12 +72,12 @@ end
 
 def list_tasks
   puts "\n"
+  show_lists
   puts "Select a list to view its tasks"
   list_choice = gets.chomp
   user_list = List.find_list_by_name(list_choice)
   user_list_id = user_list.id
   Task.list_tasks_for_list(user_list_id)
-
 end
 
 welcome
